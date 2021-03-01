@@ -647,8 +647,8 @@ def set_device_status():
         print (jcmd)
         socketio.emit (ACK_EVENT, jcmd)  # must be a json object, to avoid messy client side escape characters 
         topic = '{}/{}/{}'.format (PUB_PREFIX, jcmd['device_id'], jcmd['relsen_id'])
+        devid = jcmd['device_id']
         if SIMULATION_MODE:
-            devid = jcmd['device_id']
             if (devid not in simul_status):
                 return ({'result' : False, 'error' : 'invalid or disabled device_id'})  
             operate_simul_device (devid, jcmd['relsen_id'], jcmd['action'].lower()) # this will return the new status  
