@@ -67,20 +67,35 @@ def secure_page (current_user):
 def insecure_page ():
     return ({'result' : True, 'msg' : 'this is an open page'}, 200)
         
-# buttons to control a real device            
+
+# fixed buttons to control a given device
+@app.route('/socket/buttons')
+def socket_buttons ():
+    devid = request.args.get('device_id')
+    if (not devid):
+        return ({'result' : False, 'error' : 'device_id is required'})    
+    return render_template ('socket_buttons.html', SerVar=devid) 
+    
+# dynamic buttons to control all your devices            
 @app.route('/buttons')
-def rooot():
-    return render_template ('buttons.html')     
+def buttons():
+    result = r.get_relsen_tree()
+    dprint (result)
+    if ('error' in result):
+        return (result)
+    return render_template ('buttons.html', SerVar=result)     
+                    
                     
 # socket to MQTT bridge; you can send an arbitrary MQTT payload to any topic      
-# *** CAUTION: This is a remote trap door from the Internet to your local MQTT server! ***
-# Disable it in production mode
+# CAUTION:  Disable it in production mode, if you are deploying on a cloud ****
 @app.route('/bridge')
 def bridge():
-    return render_template ('bridge.html')  
-    # return ('MQTT bridge has been disabled')
+    return render_template ('bridge.html')  # non prod mode
+    # return ('result' : False, 'error' : 'MQTT bridge has been disabled')  # production mode
                 
-@app.route('/get/time', methods=['GET'])
+
+# TODO: implement get/device/time for a given device
+@app.route('/get/time', methods=['GET']) # this returns the Hub time stamp
 def get_time():
     time = datetime.now().strftime ("%Y-%d-%m %H:%M:%S")
     retval = {'hub_time' : time}
