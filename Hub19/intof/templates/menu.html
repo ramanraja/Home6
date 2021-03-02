@@ -64,6 +64,8 @@
         <tr><td><a href="/dump/all/status">/get/all/status</a></td><td>Current status of all devices</td></tr>
         <tr><td><a href="/get/device/status?device_id=intof_AB9A82">/get/device/status?device_id=labs1</a></td><td>Current status of a device</td></tr>
         <tr><td><a href="/set/relay/status?device_id=intof_AB9A82&relsen_id=POWER2&action=toggle">/set/relay/status?device_id=intof_AB9A82&relsen_id=POWER2&action=toggle</a></td><td>Simulate operating a relay</td></tr>
+        <tr><td><a href="/buttons">/buttons</a></td><td>Simple Javascript client for device control</td></tr>
+        
         <tr><td><a href="/get/relay/status?device_id=intof_AB9A82&relsen_id=POWER2">/get/relay/status?device_id=intof_AB9A82&relsen_id=POWER2</a></td><td>Current status of a relsen</td></tr>
         <tr><td><a href="/get/sensor/values?device_id=labs1">/get/sensor/values?device_id=labs1</a></td><td>Latest sensor readings of a device</td></tr>
 
@@ -73,7 +75,7 @@
         <tr><td><a href="/get/off/relsens">/get/off/relsens</a></td><td>Get the relsens that are OFF</td></tr>
 
         <tr><td style="color:green"><b>Push Notification</b></td></tr> 
-        <tr><td><a href="/buttons">/buttons</a></td><td>Example Javascript client for SocketIO communication</td></tr>
+        <tr><td><a href="/socket/buttons?device_id=labs1">/socket/buttons?device_id=labs1</a></td><td>Example Javascript client for SocketIO communication</td></tr>
 
         <tr><td style="color:green"><b>Database Admin (Caution!) </b></td></tr>
         <tr><td><a href="/create/db">/create/db</a></td><td>Drop and recreate the database</td></tr>
