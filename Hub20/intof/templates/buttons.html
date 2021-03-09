@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<body onload="AutoAdd()">
+<h3> <p style="font-family:verdana"> Intof IoT controller </p></h3>
+<table id="dynaTable">
+
+<script>
+var devices = {{SerVar | tojson }};   
+/* var URL = "http://localhost:5000/set/relay/status?"; */
+var URL = 'http://' +document.domain +':' +location.port + "/set/relay/status?";
+
+function AutoAdd () {
+    for (var key in devices) {
+        console.log ("device_id: "+ key + "; relsens_ids: " + devices[key]);
+        for (var index in devices[key]) {  /* NOTE: devices[key] is just the positional number */
+            console.log ("relay #: " +index + ";  relsen_id: " +devices[key][index]);
+        } /* Outrageous NOTE: index is a string ! */
+        add_row (key)
+    }
+}
+
+function add_row (device_id) {
+    var table = document.getElementById("dynaTable");    
+    table.setAttribute ("style", "font-family:verdana")
+    var row = table.insertRow (0);    /* appending rows from bottom to top */
+    var cell = row.insertCell (0);    /* add the first cell for device_id */
+    
+    var label = document.createElement("Label");
+    label.innerHTML =  device_id;
+    cell.appendChild (label);
+    
+    for (var index in devices[device_id]) {
+        console.log ("index: " +index + " ->  relsen_id: " +devices[device_id][index]);
+        add_button (row, parseInt(index), device_id, devices[device_id][index]);  /* you MUST convert index into a number ! */
+    }
+}
+
+function add_button (row_obj, col_no, device_id, relsen_id) {
+ 	var btn = document.createElement("input");
+	btn.setAttribute("type", "button");
+	btn.setAttribute("value", relsen_id);
+	btn.setAttribute("name", device_id + ":" + relsen_id);
+    btn.setAttribute("style","color:blue; font-size:12px; height=150px");
+    btn.onclick = function () {
+        console.log (btn.getAttribute("name"));
+        xreq  = new XMLHttpRequest();
+        var full_url = URL + "device_id=" + device_id + "&relsen_id=" + relsen_id +"&action=toggle"
+        xreq.open ("GET", full_url, false ); /* false: synchronous request */
+        xreq.send (null);
+        console.log (xreq.responseText);       
+    }
+    console.log("adding column #: " +col_no)
+    var cell = row_obj.insertCell (col_no+1); /* cell 0 is the device_id label */
+    cell.appendChild (btn);
+}
+</script>
+
+</body>
+</html>
