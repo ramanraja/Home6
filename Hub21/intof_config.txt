@@ -1,0 +1,99 @@
+# all the Tasmota customizations
+
+# change the device IP for each device and run: 
+# python config.py  myconf.txt
+
+# target device IP
+192.168.0.15:5000
+
+#-------------------------------------------------------------------------------
+
+otaurl
+# Do NOT put quotes around the URL ! Python will escape it again!
+#### otaurl  http://192.168.0.15:8000/ota/tasmota-minimal.bin
+otaurl       http://192.168.0.15:8000/ota/tasmota.bin.gz
+otaurl
+sleep 2
+upgrade 1
+
+#-------------------------------------------------------------------------------
+
+# activate the template. NOTE: this will restart the device; so pause for a minute before the next command
+
+module  0
+
+#sleep  60
+sleep   10
+#-------------------------------------------------------------------------------
+# DeviceName appears on top of the device's web page. It can be set from the 'configure other' page on the UI, or:
+DeviceName   pump motors
+
+// this is how the device appears on your router:
+HostName: intof_A8CB06-2822
+
+// When emulating Wemo or Hue, set the Alexa-friendly names with the commads:
+
+friendlyname1   ammas light 
+friendlyname2   kitchen fan
+
+#-------------------------------------------------------------------------------
+/*
+Timer2 {"Enable":1,"Mode":0,"Time":"18:00","Window":2,"Days":"1111111","Repeat":1,"Output":1,"Action":1}
+Timer2 {"Enable":0}
+*/
+#-------------------------------------------------------------------------------
+
+# If your device disconnects from Wi-Fi often: give the command  'Reset  3'
+# This will erase wi-fi calibration data only and will keep configuration intact. 
+# Make sure to power cycle after this. If that doesn't help, try rebooting the router as well.
+
+Reset  3 
+#-------------------------------------------------------------------------------
+
+# location for India
+
+latitude   11.030767
+longitude  76.913446
+timezone   +5:30
+
+#  0 -> do not save data to Flash
+savedata   0   
+
+# retain flag settings
+backlog powerretain on; switchretain off; buttonretain off; sensorretain off;
+
+# 1 -> enable all timers (The 'Enable timers' check box on the 'Configure timers' page):
+timers  1    
+ 
+# 0 -> turn LED OFF; required for setoption31 led link 
+LedPower  0        
+
+# start in power OFF state at startup
+PowerOnState  0        
+ 
+# 0 -> do not remember relay state at power up
+SetOption0    0        
+
+# 1 -> enable MQTT;  0 -> disable MQTT client
+SetOption3    1        
+
+# 1 -> use 'POWER1' instead of 'POWER' when only one relay is present
+SetOption26   1        
+
+# 0 -> LinkLED blinks on wiif or mqtt failure; 0 = enable blinking !!!
+SetOption31   0        
+
+# 8 -> number of reboots within 10 seconds before config reset
+SetOption36   8        
+
+# 1 -> do NOT scan relay state at restart https://github.com/arendst/Tasmota/issues/5594
+SetOption63   1        
+
+# 1 -> disable automatic reset on fast power cycle
+SetOption65   1        
+
+# changing MQTT host needs time to restart
+mqtthost    192.168.0.99
+sleep 10
+
+
