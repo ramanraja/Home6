@@ -29,7 +29,7 @@ sleep   10
 DeviceName   pump motors
 
 // this is how the device appears on your router:
-HostName: intof_A8CB06-2822
+HostName intof_A8CB06-2822
 
 // When emulating Wemo or Hue, set the Alexa-friendly names with the commads:
 
